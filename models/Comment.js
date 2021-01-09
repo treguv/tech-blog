@@ -21,6 +21,7 @@ Comment.init(
     user_id: {
       //user who made the post
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: "user",
         key: "id",
@@ -29,6 +30,7 @@ Comment.init(
     post_id: {
       //the id of the post it belongs to
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: "post",
         key: "id",

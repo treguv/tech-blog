@@ -23,7 +23,7 @@ router.get("/:id", (req, res) => {
       },
     },
     {
-      attributes: ["id", "title", "body", "user_id"], //remove password in the futrue
+      attributes: ["id", "title", "body", "user_id"],
     }
   ) //include the posts and comments of this user
     .then((dbPostData) => {
@@ -44,9 +44,9 @@ router.post("/", (req, res) => {
   // This will make a new post
   // Expects Title, body, user_id
   Post.create({
-    title: "This is a new post",
-    body: " This is the text that goes into the body",
-    user_id: "1",
+    title: req.body.title,
+    body: req.body.body,
+    user_id: req.body.user_id,
   })
     .then((dbPostData) => {
       res.json(dbPostData);
