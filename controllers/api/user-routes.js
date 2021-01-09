@@ -3,7 +3,19 @@ const { User, Post, Comment } = require("../../models");
 //get all the users
 router.get("/", (req, res) => {
   User.findAll({
-    attributes: ["id", "username", "email", "password"], //remove password in the futrue
+    attributes: ["id", "username", "email", "password"], //TODO remove password in the futrue
+    include: [
+      {
+        model: Post,
+        as: "posts",
+        attributes: ["id", "title", "body"],
+      },
+      {
+        model: Comment,
+        as: "comments",
+        attributes: ["id", "comment_text", "post_id"],
+      },
+    ],
   }) //include the posts and comments of this user
     .then((dbUserData) => {
       res.json(dbUserData);
@@ -16,16 +28,24 @@ router.get("/", (req, res) => {
 
 //get user by id
 router.get("/:id", (req, res) => {
-  User.findOne(
-    {
-      where: {
-        id: req.params.id,
-      },
+  User.findOne({
+    where: {
+      id: req.params.id,
     },
-    {
-      attributes: ["id", "username", "email", "password"], //remove password in the futrue
-    }
-  ) //include the posts and comments of this user
+    attributes: ["id", "username", "email", "password"], //remove password in the futrue
+    include: [
+      {
+        model: Post,
+        as: "posts",
+        attributes: ["id", "title", "body"],
+      },
+      {
+        model: Comment,
+        as: "comments",
+        attributes: ["id", "comment_text", "post_id"],
+      },
+    ],
+  }) //include the posts and comments of this user
     .then((dbUserData) => {
       if (!dbUserData) {
         res.status(404).json({ message: "No User found with this id" });
