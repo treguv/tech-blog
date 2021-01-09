@@ -4,7 +4,8 @@ const path = require("path");
 const controller = require("./controllers");
 //handlebars
 const exphbs = require("express-handlebars");
-
+//Sequelize
+const sequelize = require("./config/connection");
 //initialize the server
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -21,4 +22,6 @@ app.use("/", controller);
 app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
 
-app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
+});
