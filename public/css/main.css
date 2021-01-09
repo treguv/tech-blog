@@ -1,6 +1,10 @@
 * {
   margin: 0;
 }
+.link {
+  text-decoration: none;
+  color: #d9ead3;
+}
 #navbar {
   list-style-type: none;
   padding: 20px;
@@ -23,7 +27,7 @@
 #nav-header {
   color: #d9ead3;
   font-size: xx-large;
-  padding: 50px;
+  padding: 20px;
 }
 /* Post card styling */
 .card {
@@ -38,4 +42,9 @@
 .card h4 {
   display: inline;
   align-content: right;
+}
+
+/* General */
+.padding-20 {
+  padding: 20;
 }
