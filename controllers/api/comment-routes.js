@@ -3,7 +3,7 @@ const { User, Post, Comment } = require("../../models");
 //get all the comments
 router.get("/", (req, res) => {
   Comment.findAll({
-    attributes: ["id", "comment_text", "user_id"],
+    attributes: ["id", "comment_text", "user_id", "post_id"],
   }) //include the posts and comments of this user
     .then((dbCommentData) => {
       res.json(dbCommentData);
@@ -16,16 +16,12 @@ router.get("/", (req, res) => {
 
 //get comment by id
 router.get("/:id", (req, res) => {
-  Comment.findOne(
-    {
-      where: {
-        id: req.params.id,
-      },
+  Comment.findOne({
+    where: {
+      id: req.params.id,
     },
-    {
-      attributes: ["id", "comment_text", "user_id"],
-    }
-  ) //include the posts and comments of this user
+    attributes: ["id", "comment_text", "user_id", "post_id"],
+  }) //include the posts and comments of this user
     .then((dbCommentData) => {
       if (!dbCommentData) {
         res.status(404).json({ message: "No Comment found with this id" });
