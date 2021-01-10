@@ -35,6 +35,50 @@ router.get("/", (req, res) => {
     });
 });
 
+//serve up the single post page
+router.get("/viewpost/:id", (req, res) => {
+  //we need to get all posts
+  Post.findOne({
+    where: {
+      id: req.params.id,
+    },
+    attributes: ["id", "title", "body", "user_id"],
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["username"],
+      },
+      {
+        model: Comment,
+        as: "comments",
+        attributes: ["id", "comment_text", "user_id"],
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: ["username"],
+          },
+        ],
+      },
+    ],
+  })
+    .then((dbPostData) => {
+      //serialize data
+      if (!dbPostData) {
+        res.status(404).json({ message: "No Posts Available" });
+        return;
+      }
+      const post = dbPostData.get({ plain: true }); // serialize all the posts
+      console.log(post);
+      res.render("single-post", { post });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 //serve up the login page
 router.get("/login", (req, res) => {
   res.render("login");
