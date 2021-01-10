@@ -86,7 +86,46 @@ router.get("/login", (req, res) => {
 
 //serve up the dashboard
 router.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+  //we need to get all posts
+  Post.findAll({
+    where: {
+      user_id: "1",
+    },
+    attributes: ["id", "title", "body", "user_id"],
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["username"],
+      },
+      {
+        model: Comment,
+        as: "comments",
+        attributes: ["id", "comment_text", "user_id"],
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: ["username"],
+          },
+        ],
+      },
+    ],
+  })
+    .then((dbPostData) => {
+      //serialize data
+      if (!dbPostData) {
+        res.status(404).json({ message: "No Posts Available" });
+        return;
+      }
+      const posts = dbPostData.map((post) => post.get({ plain: true })); // serialize all the posts
+      console.log(posts);
+      res.render("dashboard", { posts });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
