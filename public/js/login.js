@@ -47,6 +47,22 @@ async function signupFormHandler(event) {
     } else {
       alert(response.statusText);
     }
+    //then we send in a request to log into the webpage
+    const responseTwo = await fetch("/api/users/login", {
+      method: "post",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (responseTwo.ok) {
+      console.log(response, " Logged in successfully!");
+      document.location.replace("/");
+    } else {
+      alert(response.statusText);
+    }
   }
 }
 //Add event listeners to the buttons

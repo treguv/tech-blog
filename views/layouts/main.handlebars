@@ -13,9 +13,6 @@
     <nav id="navbar">
         <ul id="navbar-ul">
             <li>
-                <p>{{loggedIn}}</p>
-            </li>
-            <li>
                 <p><a class="link" href="/">Home</a></p>
             </li>
             {{#if loggedIn}}
@@ -31,16 +28,14 @@
                 <p><a class="link" href="/login">Login</a></p>
             </li>
             {{/if}}
-            <li>
-                <p><a class="link" href="/post">New Post</a></p>
-            </li>
         </ul>
         <h1 id="nav-header">The Tech Blog</h1>
     </nav>
     {{{body}}}
 
 </body>
-<script src="/js/nav.js"></script>
+{{!--
+<script src="/js/nav.js"></script> --}}
 <script src="/js/logout.js"></script>
 
 </html>

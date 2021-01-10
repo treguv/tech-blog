@@ -4,6 +4,11 @@
     <div class="container">
         <p class="post-text post-text-padding">{{post.body}}</p>
     </div>
+    {{!-- If this is my post i can edit and delete it --}}
+    {{#if currentUser}}
+    <button id="edit-btn">Edit</button>
+    <button id="delete-btn">Delete</button>
+    {{/if}}
 </div>
 {{!-- Add Comment --}}
 <div class="padding-20">
