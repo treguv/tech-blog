@@ -11,8 +11,7 @@ async function submitPostHandler(event) {
     const response = await fetch("/api/comments", {
       method: "POST",
       body: JSON.stringify({
-        comment_text,
-        user_id,
+        comment_text, //removed user id
         post_id,
       }),
       headers: {

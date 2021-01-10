@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
       }
       const posts = dbPostData.map((post) => post.get({ plain: true })); // serialize all the posts
       console.log(posts);
-      res.render("home", { posts });
+      res.render("home", { posts, loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       console.log(err);
@@ -71,7 +71,7 @@ router.get("/viewpost/:id", (req, res) => {
       }
       const post = dbPostData.get({ plain: true }); // serialize all the posts
       console.log(post);
-      res.render("single-post", { post });
+      res.render("single-post", { post, loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       console.log(err);
@@ -81,15 +81,17 @@ router.get("/viewpost/:id", (req, res) => {
 
 //serve up the login page
 router.get("/login", (req, res) => {
-  res.render("login");
+  console.log("Is logged in?", req.session.loggedIn);
+  res.render("login", { loggedIn: req.session.loggedIn });
 });
 
 //serve up the dashboard
 router.get("/dashboard", (req, res) => {
   //we need to get all posts
+  console.log(req.session.user_id, " this is the session id");
   Post.findAll({
     where: {
-      user_id: "1",
+      user_id: req.session.user_id,
     },
     attributes: ["id", "title", "body", "user_id"],
     include: [
@@ -120,7 +122,7 @@ router.get("/dashboard", (req, res) => {
       }
       const posts = dbPostData.map((post) => post.get({ plain: true })); // serialize all the posts
       console.log(posts);
-      res.render("dashboard", { posts });
+      res.render("dashboard", { posts, loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       console.log(err);
@@ -129,6 +131,6 @@ router.get("/dashboard", (req, res) => {
 });
 
 router.get("/post", (req, res) => {
-  res.render("create-post");
+  res.render("create-post", { loggedIn: req.session.loggedIn });
 });
 module.exports = router;

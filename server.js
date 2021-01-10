@@ -6,14 +6,29 @@ const controller = require("./controllers");
 const exphbs = require("express-handlebars");
 //Sequelize
 const sequelize = require("./config/connection");
+//Session
+const session = require("express-session");
+const SequlizeStore = require("connect-session-sequelize")(session.Store);
+
+//set up the actual session
+const sess = {
+  secret: "super secret secret",
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequlizeStore({
+    db: sequelize,
+  }),
+};
 //initialize the server
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-//middlewere
+//middlewear
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session(sess));
 
 //use controllers
 app.use("/", controller);

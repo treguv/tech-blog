@@ -3,7 +3,7 @@ async function createPostHandler(event) {
   //get info we need
   const title = document.querySelector("#post-title").value.trim();
   const body = document.querySelector("#post-body").value.trim();
-  const user_id = "1"; //TODO set to session auth
+  // const user_id = 1 //TODO set to session auth
   if (body) {
     //make sure we have comment text
     const response = await fetch("/api/posts", {
@@ -11,7 +11,6 @@ async function createPostHandler(event) {
       body: JSON.stringify({
         title,
         body,
-        user_id,
       }),
       headers: {
         "Content-Type": "application/json",
