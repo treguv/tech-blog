@@ -1,8 +1,8 @@
 <div class="card single-post-padding">
-    <h1 class="post-header">{{post.title}} </h1>
+    <h1 id="post-title" class="post-header">{{post.title}} </h1>
     <h4>Posted by {{post.user.username}} on 12/1/2020</h4>
     <div class="container">
-        <p class="post-text post-text-padding">{{post.body}}</p>
+        <p id="post-body" class="post-text post-text-padding">{{post.body}}</p>
     </div>
     {{!-- If this is my post i can edit and delete it --}}
     {{#if currentUser}}
@@ -24,3 +24,6 @@
 {{/each}}
 <link rel="stylesheet" href="/css/single-post.css">
 <script src="/js/single-post.js"></script>
+{{#if currentUser}}
+<script src="/js/edit-delete-post.js"> </script>
+{{/if}}

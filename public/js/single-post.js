@@ -28,40 +28,7 @@ async function submitCommentHandler(event) {
   }
 }
 
-//handle editing the post
-function editPostHandler(event) {
-  event.preventDefault();
-}
-
-//handle deleting the post
-async function deletePostHandler(event) {
-  event.preventDefault();
-  //make request to post route delete with the current post id in nav bar
-  const post_id = window.location.toString().split("/")[
-    window.location.toString().split("/").length - 1
-  ];
-  const response = await fetch("/api/posts/" + post_id, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  //check if all good
-  if (response.ok) {
-    document.location.replace("/dashboard");
-  } else {
-    alert(response.statusText); // find better way
-  }
-}
-
 //post a commment
 document
   .querySelector("#post-comment-btn")
   .addEventListener("click", submitCommentHandler);
-//edit post
-//document.querySelector("#edit-btn").addEventListener("click", editPostHandler);
-//delete post
-document
-  .querySelector("#delete-btn")
-  .addEventListener("click", deletePostHandler);

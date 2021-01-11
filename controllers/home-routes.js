@@ -138,4 +138,12 @@ router.get("/dashboard", (req, res) => {
 router.get("/post", (req, res) => {
   res.render("create-post", { loggedIn: req.session.loggedIn });
 });
+//load the edit page
+router.get("/edit/:id", (req, res) => {
+  //    post_id: req.postID,
+  res.render("edit-post", {
+    loggedIn: req.session.loggedIn,
+    post_id: req.params.id,
+  });
+});
 module.exports = router;
