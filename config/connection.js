@@ -6,6 +6,7 @@ require("dotenv").config(); // For loading env variables
 const sequelize;
 if (proccess.env.JAWSDB_URL) {
   //we have jawsdb
+  console.log("We have and will use jawsdb!");
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
   //otherwise connect to local db
